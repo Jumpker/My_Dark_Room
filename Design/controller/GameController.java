@@ -18,6 +18,7 @@ public class GameController {
     private SceneManager sceneManager;
     private TrapManager trapManager;
     private VehicleManager vehicleManager;
+    private RoomStatusTimerManager roomStatusTimerManager;
     
     /**
      * 构造函数
@@ -29,6 +30,7 @@ public class GameController {
         this.eventManager = eventManager;
         this.trapManager = new TrapManager(model, eventManager);
         this.vehicleManager = new VehicleManager(model, eventManager);
+        this.roomStatusTimerManager = new RoomStatusTimerManager(model, eventManager);
         
         // 初始化游戏
         initializeGame();
@@ -46,28 +48,15 @@ public class GameController {
             // 添加初始消息
             addMessage("火堆熄灭了.");
             addMessage("房间冰冷刺骨.");
+            
+            // 启动第一阶段房间状态更新计时器
+            roomStatusTimerManager.startPhase1Timer();
         });
         initialMessageTimer.setRepeats(false);
         initialMessageTimer.start();
-        
-        // 启动房间状态更新计时器
-        startRoomStatusTimer();
     }
     
-    /**
-     * 启动房间状态更新计时器
-     */
-    private void startRoomStatusTimer() {
-        Timer roomStatusTimer = new Timer(10000, new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                model.decreaseRoomHeat();
-                addMessage(model.getRoomStatusMessage());
-            }
-        });
-        roomStatusTimer.setRepeats(true);
-        roomStatusTimer.start();
-    }
+
     
     /**
      * 添加燃料（添柴）
@@ -216,7 +205,6 @@ public class GameController {
         
         if (model.getResource("木头") >= 30) {
             if (vehicleManager.buildCart()) {
-                addMessage("货车可以帮助运载更多的木头.");
                 addMessage("摇摇晃晃的货车满载从森林运出木头.");
                 
                 // 通知建筑面板更新（移除货车按钮）

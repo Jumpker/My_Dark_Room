@@ -41,10 +41,10 @@ public class FireRoomScene implements Scene {
         // 交互面板 (中央)
         JPanel interactionPanel = new JPanel();
         interactionPanel.setBackground(Color.WHITE);
-        interactionPanel.setBorder(BorderFactory.createTitledBorder("交互面板"));
+        interactionPanel.setBorder(BorderFactory.createTitledBorder("生火间"));
         
         // 游戏第一阶段：只有"添柴"按钮
-        CooldownButton addFuelButton = new CooldownButton("添柴", 6); // 6秒冷却
+        CooldownButton addFuelButton = new CooldownButton("添柴", 5); // 5秒冷却
         interactionPanel.add(addFuelButton);
         
         addFuelButton.addActionListener(e -> {
