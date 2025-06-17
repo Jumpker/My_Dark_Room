@@ -1,7 +1,7 @@
-package src.Design.view;
+package Design.view;
 
-import src.Design.controller.GameController;
-import src.Design.event.EventManager;
+import Design.controller.GameController;
+import Design.event.EventManager;
 
 import javax.swing.*;
 import java.awt.*;

@@ -1,4 +1,4 @@
-package src.Design;
+package Design;
 
 import java.util.Map;
 

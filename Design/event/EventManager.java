@@ -1,4 +1,4 @@
-package src.Design.event;
+package Design.event;
 
 import java.util.ArrayList;
 import java.util.List;

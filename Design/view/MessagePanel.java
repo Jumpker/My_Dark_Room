@@ -1,6 +1,6 @@
-package src.Design.view;
+package Design.view;
 
-import src.Design.controller.GameController;
+import Design.controller.GameController;
 
 import javax.swing.*;
 import java.awt.*;

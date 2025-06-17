@@ -1,10 +1,10 @@
-package src.Design.view;
+package Design.view;
 
-import src.Design.controller.GameController;
-import src.Design.view.scenes.CurrentScaleScene;
-import src.Design.view.scenes.FireRoomScene;
-import src.Design.view.scenes.LongJourneyScene;
-import src.Design.view.scenes.Scene;
+import Design.controller.GameController;
+import Design.view.scenes.CurrentScaleScene;
+import Design.view.scenes.FireRoomScene;
+import Design.view.scenes.LongJourneyScene;
+import Design.view.scenes.Scene;
 
 import javax.swing.*;
 import java.awt.*;

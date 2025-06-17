@@ -1,4 +1,4 @@
-package src.Design.view.scenes;
+package Design.view.scenes;
 
 import javax.swing.*;
 import java.awt.*;

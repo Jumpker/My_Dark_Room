@@ -1,7 +1,7 @@
-package src.Design.controller;
+package Design.controller;
 
-import src.Design.model.GameModel;
-import src.Design.event.EventManager;
+import Design.model.GameModel;
+import Design.event.EventManager;
 
 import java.util.ArrayList;
 import java.util.List;

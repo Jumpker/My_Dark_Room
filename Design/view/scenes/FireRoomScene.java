@@ -1,10 +1,10 @@
-package src.Design.view.scenes;
+package Design.view.scenes;
 
-import src.Design.CooldownButton;
-import src.Design.controller.GameController;
-import src.Design.view.BuildingPanel;
-import src.Design.view.ResourcePanel;
-import src.Design.view.SceneManager;
+import Design.CooldownButton;
+import Design.controller.GameController;
+import Design.view.BuildingPanel;
+import Design.view.ResourcePanel;
+import Design.view.SceneManager;
 
 import javax.swing.*;
 import java.awt.*;

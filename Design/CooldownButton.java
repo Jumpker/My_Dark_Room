@@ -1,4 +1,4 @@
-package src.Design;
+package Design;
 
 import javax.swing.*;
 import java.awt.*;

@@ -1,8 +1,8 @@
-package src.Design.controller;
+package Design.controller;
 
-import src.Design.event.EventManager;
-import src.Design.model.GameModel;
-import src.Design.view.SceneManager;
+import Design.event.EventManager;
+import Design.model.GameModel;
+import Design.view.SceneManager;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;

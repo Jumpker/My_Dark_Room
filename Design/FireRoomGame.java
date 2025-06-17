@@ -1,10 +1,10 @@
-package src.Design;
+package Design;
 
-import src.Design.controller.GameController;
-import src.Design.event.EventManager;
-import src.Design.model.GameModel;
-import src.Design.view.MessagePanel;
-import src.Design.view.SceneManager;
+import Design.controller.GameController;
+import Design.event.EventManager;
+import Design.model.GameModel;
+import Design.view.MessagePanel;
+import Design.view.SceneManager;
 
 import javax.swing.*;
 import java.awt.*;
