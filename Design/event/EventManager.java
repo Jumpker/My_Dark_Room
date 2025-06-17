@@ -33,19 +33,12 @@ public class EventManager {
     }
     
     /**
-     * 发送消息给所有监听器
+     * 通知所有消息监听器
      */
-    public void fireMessage(String message) {
+    public void notifyMessageListeners(String message) {
         for (Consumer<String> listener : messageListeners) {
             listener.accept(message);
         }
-    }
-    
-    /**
-     * 通知所有消息监听器（别名方法，与fireMessage功能相同）
-     */
-    public void notifyMessageListeners(String message) {
-        fireMessage(message);
     }
     
     /**
@@ -65,17 +58,10 @@ public class EventManager {
     /**
      * 通知所有资源变化监听器
      */
-    public void fireResourceChanged(Map<String, Integer> resources) {
+    public void notifyResourceChangeListeners(Map<String, Integer> resources) {
         for (Consumer<Map<String, Integer>> listener : resourceChangeListeners) {
             listener.accept(resources);
         }
-    }
-    
-    /**
-     * 通知所有资源变化监听器（别名方法，与fireResourceChanged功能相同）
-     */
-    public void notifyResourceChangeListeners(Map<String, Integer> resources) {
-        fireResourceChanged(resources);
     }
     
     /**
@@ -95,17 +81,10 @@ public class EventManager {
     /**
      * 通知所有游戏阶段变化监听器
      */
-    public void fireGamePhaseChanged(boolean isPhase2) {
+    public void notifyGamePhaseChangeListeners(boolean isPhase2) {
         for (Consumer<Boolean> listener : gamePhaseChangeListeners) {
             listener.accept(isPhase2);
         }
-    }
-    
-    /**
-     * 通知所有游戏阶段变化监听器（别名方法，与fireGamePhaseChanged功能相同）
-     */
-    public void notifyGamePhaseChangeListeners(boolean isPhase2) {
-        fireGamePhaseChanged(isPhase2);
     }
     
     // 建筑变化监听器列表
@@ -128,17 +107,10 @@ public class EventManager {
     /**
      * 通知所有建筑变化监听器
      */
-    public void fireBuildingChanged(Map<String, Integer> buildings) {
+    public void notifyBuildingChangeListeners(Map<String, Integer> buildings) {
         for (Consumer<Map<String, Integer>> listener : buildingChangeListeners) {
             listener.accept(buildings);
         }
-    }
-    
-    /**
-     * 通知所有建筑变化监听器（别名方法，与fireBuildingChanged功能相同）
-     */
-    public void notifyBuildingChangeListeners(Map<String, Integer> buildings) {
-        fireBuildingChanged(buildings);
     }
     
     // 场景名称变化监听器列表
@@ -161,16 +133,9 @@ public class EventManager {
     /**
      * 通知所有场景名称变化监听器
      */
-    public void fireSceneNameChanged(String sceneName) {
+    public void notifySceneNameChangeListeners(String sceneName) {
         for (Consumer<String> listener : sceneNameChangeListeners) {
             listener.accept(sceneName);
         }
-    }
-    
-    /**
-     * 通知所有场景名称变化监听器（别名方法，与fireSceneNameChanged功能相同）
-     */
-    public void notifySceneNameChangeListeners(String sceneName) {
-        fireSceneNameChanged(sceneName);
     }
 }

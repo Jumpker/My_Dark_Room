@@ -1,7 +1,9 @@
 package Design.controller;
 
+import Design.GameConstants;
 import Design.model.GameModel;
-import Design.event.EventManager;
+import Design.service.MessageService;
+import Design.service.ResourceService;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -12,7 +14,8 @@ import java.util.Random;
  */
 public class TrapManager {
     private GameModel model;
-    private EventManager eventManager;
+    private MessageService messageService;
+    private ResourceService resourceService;
     private Random random;
     
     /**
@@ -20,9 +23,10 @@ public class TrapManager {
      * @param model 游戏模型
      * @param eventManager 事件管理器
      */
-    public TrapManager(GameModel model, EventManager eventManager) {
+    public TrapManager(GameModel model, MessageService messageService, ResourceService resourceService) {
         this.model = model;
-        this.eventManager = eventManager;
+        this.messageService = messageService;
+        this.resourceService = resourceService;
         this.random = new Random();
     }
     
@@ -31,7 +35,7 @@ public class TrapManager {
      * 随机获得0~n个毛皮、肉和牙齿（n为陷阱数量）
      */
     public void checkTraps() {
-        int trapCount = model.getBuilding("陷阱");
+        int trapCount = model.getBuilding(GameConstants.Buildings.TRAP);
         if (trapCount <= 0) {
             return;
         }
@@ -43,13 +47,13 @@ public class TrapManager {
         
         // 添加资源到模型
         if (furCount > 0) {
-            model.increaseResource("毛皮", furCount);
+            resourceService.increaseResource(GameConstants.Resources.FUR, furCount);
         }
         if (meatCount > 0) {
-            model.increaseResource("肉", meatCount);
+            resourceService.increaseResource(GameConstants.Resources.MEAT, meatCount);
         }
         if (toothCount > 0) {
-            model.increaseResource("牙齿", toothCount);
+            resourceService.increaseResource(GameConstants.Resources.TEETH, toothCount);
         }
         
         // 生成消息
@@ -57,9 +61,6 @@ public class TrapManager {
         if (!message.isEmpty()) {
             addMessage(message);
         }
-        
-        // 通知资源变化
-        eventManager.notifyResourceChangeListeners(model.getResources());
     }
     
     /**
@@ -83,7 +84,7 @@ public class TrapManager {
         }
         
         if (items.isEmpty()) {
-            return "陷阱一无所获    .";
+            return GameConstants.Messages.TRAP_EMPTY;
         }
         
         StringBuilder messageBuilder = new StringBuilder("陷阱捕获到");
@@ -105,7 +106,7 @@ public class TrapManager {
      * @param message 消息内容
      */
     private void addMessage(String message) {
-        eventManager.notifyMessageListeners(message);
+        messageService.sendMessage(message);
     }
     
     /**
@@ -113,6 +114,6 @@ public class TrapManager {
      * @return 陷阱数量
      */
     public int getTrapCount() {
-        return model.getBuilding("陷阱");
+        return model.getBuilding(GameConstants.Buildings.TRAP);
     }
 }

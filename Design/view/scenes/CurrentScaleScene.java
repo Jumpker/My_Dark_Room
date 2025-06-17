@@ -1,6 +1,7 @@
 package Design.view.scenes;
 
 import Design.CooldownButton;
+import Design.GameConstants;
 import Design.controller.GameController;
 
 import javax.swing.*;
@@ -38,16 +39,16 @@ public class CurrentScaleScene implements Scene {
         // 交互面板 (中央)
         JPanel interactionPanel = new JPanel(new GridLayout(2, 1)); // 两部分
         interactionPanel.setBackground(Color.WHITE);
-        interactionPanel.setBorder(BorderFactory.createTitledBorder("交互面板"));
+        interactionPanel.setBorder(BorderFactory.createTitledBorder(GameConstants.UI.INTERACTION_PANEL_TITLE));
         
         activeEventPanel = new JPanel();
         activeEventPanel.setBackground(Color.WHITE);
-        activeEventPanel.setBorder(BorderFactory.createTitledBorder("主动事件"));
+        activeEventPanel.setBorder(BorderFactory.createTitledBorder(GameConstants.UI.ACTIVE_EVENTS_TITLE));
         interactionPanel.add(activeEventPanel);
         
         JPanel laborDistributionPanel = new JPanel();
         laborDistributionPanel.setBackground(Color.WHITE);
-        laborDistributionPanel.setBorder(BorderFactory.createTitledBorder("人员分工"));
+        laborDistributionPanel.setBorder(BorderFactory.createTitledBorder(GameConstants.UI.LABOR_DISTRIBUTION_TITLE));
         interactionPanel.add(laborDistributionPanel);
         
         panel.add(interactionPanel, BorderLayout.CENTER);

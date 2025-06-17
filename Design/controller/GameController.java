@@ -1,7 +1,9 @@
 package Design.controller;
 
+import Design.GameConstants;
 import Design.event.EventManager;
 import Design.model.GameModel;
+import Design.service.MessageService;
 import Design.view.SceneManager;
 
 import javax.swing.*;
@@ -15,6 +17,7 @@ import java.util.Map;
 public class GameController {
     private GameModel model;
     private EventManager eventManager;
+    private MessageService messageService;
     private SceneManager sceneManager;
     private TrapManager trapManager;
     private VehicleManager vehicleManager;
@@ -28,9 +31,10 @@ public class GameController {
     public GameController(GameModel model, EventManager eventManager) {
         this.model = model;
         this.eventManager = eventManager;
-        this.trapManager = new TrapManager(model, eventManager);
+        this.messageService = new MessageService(eventManager);
+        this.trapManager = new TrapManager(model, messageService);
         this.vehicleManager = new VehicleManager(model, eventManager);
-        this.roomStatusTimerManager = new RoomStatusTimerManager(model, eventManager);
+        this.roomStatusTimerManager = new RoomStatusTimerManager(model, messageService);
         
         // 初始化游戏
         initializeGame();
@@ -72,7 +76,7 @@ public class GameController {
                 addMessage(messages[(int) (Math.random() * messages.length)]);
                 eventManager.notifyResourceChangeListeners(model.getResources());
             } else {
-                addMessage("木头不够了.");
+                addMessage(GameConstants.Messages.WOOD_SHORTAGE);
             }
         } else {
             // 第一阶段：不需要消耗木头，可以无限添柴
@@ -92,14 +96,14 @@ public class GameController {
      */
     private void triggerGameProgression() {
         model.setGamePhase2(true);
-        Timer strangerArrivalTimer = new Timer(10000, ev -> {
-            addMessage("一个衣衫褴褛的陌生人步履蹒跚地步入门来，瘫倒在角落里.");
-            Timer strangerMumbleTimer = new Timer(10000, ev2 -> {
-                addMessage("陌生人瑟瑟发抖，呢喃不已，听不清在说些什么.");
-                Timer strangerCalmTimer = new Timer(10000, ev3 -> {
-                    addMessage("角落里的陌生人不再颤抖了，她的呼吸平静了下来.");
-                    Timer strangerHelpTimer = new Timer(5000, ev4 -> {
-                        addMessage("那名陌生人站在火堆旁.她说她可以帮忙。她说她会建东西.");
+        Timer strangerArrivalTimer = new Timer(GameConstants.Timers.STRANGER_ARRIVAL_DELAY, ev -> {
+            addMessage(GameConstants.Messages.STRANGER_ARRIVAL);
+            Timer strangerMumbleTimer = new Timer(GameConstants.Timers.STRANGER_MUMBLE_DELAY, ev2 -> {
+                addMessage(GameConstants.Messages.STRANGER_MUMBLE);
+                Timer strangerCalmTimer = new Timer(GameConstants.Timers.STRANGER_CALM_DELAY, ev3 -> {
+                    addMessage(GameConstants.Messages.STRANGER_CALM);
+                    Timer strangerHelpTimer = new Timer(GameConstants.Timers.STRANGER_HELP_DELAY, ev4 -> {
+                        addMessage(GameConstants.Messages.STRANGER_HELP);
                         // 触发游戏第二阶段
                         triggerGamePhase2();
                     });
@@ -129,12 +133,12 @@ public class GameController {
         eventManager.notifyGamePhaseChangeListeners(true);
         
         // 第二阶段消息
-        Timer phase2MessagesTimer = new Timer(15000, e -> {
-            addMessage("建造者说他能够制作陷阱来捕捉那些仍在野外活动的野兽.");
-            Timer message2Timer = new Timer(5000, ev2 -> {
-                addMessage("建造者说他能够制造出货车，用来运载木头.");
-                Timer message3Timer = new Timer(5000, ev3 -> {
-                    addMessage("建造者说这里有许多流浪者，他们也会来工作.");
+        Timer phase2MessagesTimer = new Timer(GameConstants.Timers.PHASE2_MESSAGES_DELAY, e -> {
+            addMessage(GameConstants.Messages.BUILDER_TRAPS);
+            Timer message2Timer = new Timer(GameConstants.Timers.PHASE2_MESSAGE2_DELAY, ev2 -> {
+                addMessage(GameConstants.Messages.BUILDER_CART);
+                Timer message3Timer = new Timer(GameConstants.Timers.PHASE2_MESSAGE3_DELAY, ev3 -> {
+                    addMessage(GameConstants.Messages.BUILDER_WANDERERS);
                 });
                 message3Timer.setRepeats(false);
                 message3Timer.start();
@@ -153,7 +157,7 @@ public class GameController {
         int woodAmount = vehicleManager.getWoodGainAmount();
         model.increaseResource("木头", woodAmount);
         eventManager.notifyResourceChangeListeners(model.getResources());
-        addMessage("林地上散落着枯枝败叶.");
+        addMessage(GameConstants.Messages.WOOD_SCATTERED);
     }
     
     /**
@@ -164,7 +168,7 @@ public class GameController {
             model.decreaseResource("木头", 100);
             model.increaseBuilding("小屋");
             eventManager.notifyResourceChangeListeners(model.getResources());
-            addMessage("建造者在林中建起一栋小屋，他说消息很快就会流传出去.");
+            addMessage(GameConstants.Messages.HUT_BUILT);
             
             // 检查是否是第一个小屋
             if (model.getBuilding("小屋") == 1) {
@@ -173,10 +177,10 @@ public class GameController {
                     sceneManager.showScene(SceneManager.CURRENT_SCALE_SCENE);
                 }
                 // 通知场景名称变化为"孤独小屋"
-                eventManager.notifySceneNameChangeListeners("孤独小屋");
+            eventManager.notifySceneNameChangeListeners(GameConstants.Scenes.LONELY_HUT);
             }
         } else {
-            addMessage("木头不够了.");
+            addMessage(GameConstants.Messages.WOOD_SHORTAGE);
         }
     }
     
@@ -188,9 +192,9 @@ public class GameController {
             model.decreaseResource("木头", 10);
             model.increaseBuilding("陷阱");
             eventManager.notifyResourceChangeListeners(model.getResources());
-            addMessage("陷阱越多，抓到的猎物就越多.");
+            addMessage(GameConstants.Messages.TRAP_MORE_PREY);
         } else {
-            addMessage("木头不够了.");
+            addMessage(GameConstants.Messages.WOOD_SHORTAGE);
         }
     }
     
@@ -199,19 +203,19 @@ public class GameController {
      */
     public void buildCart() {
         if (vehicleManager.hasCart()) {
-            addMessage("已经有一辆货车了，不需要再建造.");
+            addMessage(GameConstants.Messages.CART_EXISTS);
             return;
         }
         
-        if (model.getResource("木头") >= 30) {
+        if (model.getResource(GameConstants.Resources.WOOD) >= GameConstants.BuildingCosts.CART_COST) {
             if (vehicleManager.buildCart()) {
-                addMessage("摇摇晃晃的货车满载从森林运出木头.");
+                addMessage(GameConstants.Messages.CART_BUILT);
                 
                 // 通知建筑面板更新（移除货车按钮）
                 eventManager.notifyBuildingChangeListeners(model.getBuildings());
             }
         } else {
-            addMessage("木头不够了.");
+            addMessage(GameConstants.Messages.WOOD_SHORTAGE);
         }
     }
     
@@ -220,7 +224,7 @@ public class GameController {
      * @param message 消息内容
      */
     public void addMessage(String message) {
-        eventManager.notifyMessageListeners(message);
+        messageService.sendMessage(message);
     }
     
     /**

@@ -60,6 +60,9 @@ public class SceneManager {
         currentScaleScene = new CurrentScaleScene(controller);
         longJourneyScene = new LongJourneyScene();
         
+        // 设置场景管理器引用
+        fireRoomScene.setSceneManager(this);
+        
         // 添加场景到卡片布局
         mainContentPanel.add(fireRoomScene.getPanel(), FIRE_ROOM_SCENE);
         mainContentPanel.add(currentScaleScene.getPanel(), CURRENT_SCALE_SCENE);

@@ -114,14 +114,14 @@ public class GameModel {
      * 增加房间温度
      */
     public void increaseRoomHeat() {
-        roomHeat = Math.min(roomStatusMessages.length - 1, roomHeat + 1);
+        roomHeat = Math.min(roomStatusMessages.length - 1, roomHeat + 1);//用min实现，这样即使用户一直添柴也不会越界
     }
     
     /**
      * 减少房间温度
      */
     public void decreaseRoomHeat() {
-        roomHeat = Math.max(0, roomHeat - 1);
+        roomHeat = Math.max(0, roomHeat - 1);//用max实现，这样即使用户一直不添柴也不会越界
     }
     
     /**
@@ -129,7 +129,7 @@ public class GameModel {
      * @return 房间状态消息
      */
     public String getRoomStatusMessage() {
-        return roomStatusMessages[Math.min(roomHeat, roomStatusMessages.length - 1)];
+        return roomStatusMessages[Math.min(roomHeat, roomStatusMessages.length - 1)];//用min实现，这样即使用户一直添柴也不会越界
     }
     
     /**

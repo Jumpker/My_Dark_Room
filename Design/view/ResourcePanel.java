@@ -1,5 +1,6 @@
 package Design.view;
 
+import Design.GameConstants;
 import Design.controller.GameController;
 import Design.event.EventManager;
 
@@ -27,7 +28,7 @@ public class ResourcePanel {
         // 初始化主面板
         panel = new JPanel();
         panel.setBackground(Color.WHITE);
-        panel.setBorder(BorderFactory.createTitledBorder("资源"));
+        panel.setBorder(BorderFactory.createTitledBorder(GameConstants.UI.RESOURCE_PANEL_TITLE));
         panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
         panel.setPreferredSize(new Dimension(250, panel.getPreferredSize().height));
         panel.setVisible(false); // 初始不可见，等待游戏阶段2触发
@@ -36,13 +37,13 @@ public class ResourcePanel {
         resourcesPanel = new JPanel();
         resourcesPanel.setBackground(Color.WHITE);
         resourcesPanel.setLayout(new BoxLayout(resourcesPanel, BoxLayout.Y_AXIS));
-        resourcesPanel.setBorder(BorderFactory.createTitledBorder("仓库"));
+        resourcesPanel.setBorder(BorderFactory.createTitledBorder(GameConstants.UI.WAREHOUSE_TITLE));
         
         // 初始化建筑子面板
         buildingsPanel = new JPanel();
         buildingsPanel.setBackground(Color.WHITE);
         buildingsPanel.setLayout(new BoxLayout(buildingsPanel, BoxLayout.Y_AXIS));
-        buildingsPanel.setBorder(BorderFactory.createTitledBorder("建筑"));
+        buildingsPanel.setBorder(BorderFactory.createTitledBorder(GameConstants.UI.BUILDING_TITLE));
         
         // 添加子面板到主面板
         panel.add(resourcesPanel);
@@ -118,7 +119,7 @@ public class ResourcePanel {
                 buildingsPanel.add(buildingLabel);
             }
         } else {
-            JLabel noBuildingsLabel = new JLabel("暂无建筑");
+            JLabel noBuildingsLabel = new JLabel(GameConstants.UI.NO_BUILDINGS);
             noBuildingsLabel.setAlignmentX(Component.LEFT_ALIGNMENT);
             buildingsPanel.add(noBuildingsLabel);
         }
@@ -140,9 +141,9 @@ public class ResourcePanel {
      */
     private boolean isBuilding(String resourceName) {
         // 判断资源是否为建筑类型
-        return resourceName.equals("小屋") || 
-               resourceName.equals("陷阱") || 
-               resourceName.equals("货车");
+        return resourceName.equals(GameConstants.Buildings.HUT) ||
+               resourceName.equals(GameConstants.Buildings.TRAP) ||
+               resourceName.equals(GameConstants.Buildings.CART);
     }
     
     /**
@@ -161,7 +162,7 @@ public class ResourcePanel {
             updateResources(controller.getModel().getResources());
             
             // 更新建筑子面板标题为"森林"
-            updateBuildingsPanelTitle("森林");
+            updateBuildingsPanelTitle(GameConstants.UI.FOREST_TITLE);
         }
     }
     
@@ -170,16 +171,16 @@ public class ResourcePanel {
      * @param sceneName 场景名称
      */
     private void onSceneNameChanged(String sceneName) {
-        if ("孤独小屋".equals(sceneName)) {
+        if (GameConstants.Scenes.LONELY_HUT.equals(sceneName)) {
             // 获取小屋数量
-            int hutCount = controller.getModel().getBuilding("小屋");
+            int hutCount = controller.getModel().getBuilding(GameConstants.Buildings.HUT);
             // 计算人数上限（每个小屋4人）
             int populationLimit = hutCount * 4;
             // 当前人数（初始为0）
             int currentPopulation = 0;
             
             // 更新建筑子面板标题为"村落 X/Y"
-            updateBuildingsPanelTitle(String.format("村落 %d/%d", currentPopulation, populationLimit));
+            updateBuildingsPanelTitle(String.format(GameConstants.UI.VILLAGE_TITLE_FORMAT, currentPopulation, populationLimit));
         }
     }
     

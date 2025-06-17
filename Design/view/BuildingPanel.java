@@ -1,5 +1,6 @@
 package Design.view;
 
+import Design.GameConstants;
 import Design.HoverInfoButton;
 import Design.controller.GameController;
 import Design.event.EventManager;
@@ -26,7 +27,7 @@ public class BuildingPanel {
         // 初始化面板
         panel = new JPanel();
         panel.setBackground(Color.WHITE);
-        panel.setBorder(BorderFactory.createTitledBorder("建筑面板"));
+        panel.setBorder(BorderFactory.createTitledBorder(GameConstants.UI.BUILDING_PANEL_TITLE));
         panel.setVisible(false); // 初始不可见，等待游戏阶段2触发
         
         // 监听游戏阶段变化事件
@@ -60,25 +61,25 @@ public class BuildingPanel {
      */
     private void addBuildingOptions() {
         panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
-        panel.setBorder(BorderFactory.createTitledBorder("建筑"));
+        panel.setBorder(BorderFactory.createTitledBorder(GameConstants.UI.BUILDING_TITLE));
         
         // 创建小屋按钮及其信息标签的面板
         JPanel hutPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
-        HoverInfoButton hutButton = new HoverInfoButton("小屋", "木头-100");
+        HoverInfoButton hutButton = new HoverInfoButton(GameConstants.Buildings.HUT, GameConstants.Resources.WOOD + "-" + GameConstants.BuildingCosts.HUT_COST);
         hutPanel.add(hutButton);
         hutPanel.add(hutButton.getInfoLabel());
         panel.add(hutPanel);
         
         // 创建陷阱按钮及其信息标签的面板
         JPanel trapPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
-        HoverInfoButton trapButton = new HoverInfoButton("陷阱", "木头-10");
+        HoverInfoButton trapButton = new HoverInfoButton(GameConstants.Buildings.TRAP, GameConstants.Resources.WOOD + "-" + GameConstants.BuildingCosts.TRAP_COST);
         trapPanel.add(trapButton);
         trapPanel.add(trapButton.getInfoLabel());
         panel.add(trapPanel);
         
         // 创建货车按钮及其信息标签的面板
         cartPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
-        HoverInfoButton cartButton = new HoverInfoButton("货车", "木头-30");
+        HoverInfoButton cartButton = new HoverInfoButton(GameConstants.Buildings.CART, GameConstants.Resources.WOOD + "-" + GameConstants.BuildingCosts.CART_COST);
         cartPanel.add(cartButton);
         cartPanel.add(cartButton.getInfoLabel());
         panel.add(cartPanel);
@@ -98,7 +99,7 @@ public class BuildingPanel {
      */
     private void onBuildingChanged(Map<String, Integer> buildings) {
         // 检查是否有货车，如果有则移除货车按钮
-        if (buildings.containsKey("货车") && buildings.get("货车") > 0 && cartPanel != null) {
+        if (buildings.containsKey(GameConstants.Buildings.CART) && buildings.get(GameConstants.Buildings.CART) > 0 && cartPanel != null) {
             panel.remove(cartPanel);
             cartPanel = null;
             panel.revalidate();

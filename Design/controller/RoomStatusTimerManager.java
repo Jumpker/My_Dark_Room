@@ -1,5 +1,6 @@
 package Design.controller;
 
+import Design.GameConstants;
 import Design.model.GameModel;
 import Design.event.EventManager;
 
@@ -12,9 +13,9 @@ import java.awt.event.ActionListener;
  */
 public class RoomStatusTimerManager {
     // 常量定义
-    private static final int PHASE1_UPDATE_INTERVAL = 10000; // 第一阶段更新间隔：10秒
-    private static final int PHASE2_STATUS_UPDATE_INTERVAL = 30000; // 第二阶段状态更新间隔：30秒
-    private static final int PHASE2_HEAT_DECREASE_INTERVAL = 60000; // 第二阶段温度降低间隔：60秒
+    private static final int PHASE1_UPDATE_INTERVAL = GameConstants.Timers.PHASE1_TIMER_INTERVAL; // 第一阶段更新间隔：10秒
+    private static final int PHASE2_STATUS_UPDATE_INTERVAL = GameConstants.Timers.PHASE2_STATUS_TIMER_INTERVAL; // 第二阶段状态更新间隔：30秒
+    private static final int PHASE2_HEAT_DECREASE_INTERVAL = GameConstants.Timers.PHASE2_HEAT_TIMER_INTERVAL; // 第二阶段温度降低间隔：60秒
     
     private GameModel model;
     private EventManager eventManager;

@@ -1,5 +1,6 @@
 package Design.view;
 
+import Design.GameConstants;
 import Design.controller.GameController;
 
 import javax.swing.*;
@@ -38,7 +39,7 @@ public class MessagePanel {
         panel.repaint();
         
         // 75秒后移除消息
-        Timer timer = new Timer(75000, e -> {
+        Timer timer = new Timer(GameConstants.Timers.MESSAGE_DISPLAY_TIME, e -> {
             panel.remove(messageLabel);
             panel.revalidate();
             panel.repaint();

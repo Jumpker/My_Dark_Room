@@ -1,5 +1,6 @@
 package Design;
 
+import Design.GameConstants;
 import Design.controller.GameController;
 import Design.event.EventManager;
 import Design.model.GameModel;
@@ -118,9 +119,9 @@ public class FireRoomGame extends JFrame {
         topButtonPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
         add(topButtonPanel, BorderLayout.NORTH);
         
-        JButton fireRoomButton = new JButton("生火间");
+        JButton fireRoomButton = new JButton(GameConstants.UI.FIRE_ROOM_TITLE);
         currentScaleButton = new JButton("   /   ");
-        longJourneyButton = new JButton("漫漫尘途"); // 使用类成员变量
+        longJourneyButton = new JButton(GameConstants.Scenes.LONG_JOURNEY); // 使用类成员变量
         
         // 初始阶段只显示生火间按钮，其他按钮隐藏
         currentScaleButton.setVisible(false);
@@ -157,9 +158,9 @@ public class FireRoomGame extends JFrame {
      * 场景名称变化处理
      */
     private void onSceneNameChanged(String sceneName) {
-          if ("孤独小屋".equals(sceneName)) {
+          if (GameConstants.Scenes.LONELY_HUT.equals(sceneName)) {
               // 更新当前规模按钮名称
-              currentScaleButton.setText("孤独小屋");
+              currentScaleButton.setText(GameConstants.Scenes.LONELY_HUT);
           }
       }
     

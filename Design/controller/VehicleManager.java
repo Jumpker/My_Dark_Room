@@ -1,5 +1,6 @@
 package Design.controller;
 
+import Design.GameConstants;
 import Design.model.GameModel;
 import Design.event.EventManager;
 
@@ -27,12 +28,12 @@ public class VehicleManager {
      * @return 是否成功建造
      */
     public boolean buildCart() {
-        if (hasCart() || model.getResource("木头") < 30) {
+        if (hasCart() || model.getResource(GameConstants.Resources.WOOD) < GameConstants.BuildingCosts.CART_COST) {
             return false;
         }
         
-        model.decreaseResource("木头", 30);
-        model.increaseBuilding("货车");
+        model.decreaseResource(GameConstants.Resources.WOOD, GameConstants.BuildingCosts.CART_COST);
+        model.increaseBuilding(GameConstants.Buildings.CART);
         
         // 通知资源变化
         eventManager.notifyResourceChangeListeners(model.getResources());
@@ -45,7 +46,7 @@ public class VehicleManager {
      * @return 木头数量
      */
     public int getWoodGainAmount() {
-        return hasCart() ? CART_WOOD_GAIN : DEFAULT_WOOD_GAIN;
+        return hasCart() ? GameConstants.GameValues.CART_WOOD_GAIN : GameConstants.GameValues.DEFAULT_WOOD_GAIN;
     }
     
     /**
@@ -53,7 +54,7 @@ public class VehicleManager {
      * @return 是否已有货车
      */
     public boolean hasCart() {
-        return model.getBuilding("货车") > 0;
+        return model.getBuilding(GameConstants.Buildings.CART) > 0;
     }
     
     /**
@@ -61,6 +62,6 @@ public class VehicleManager {
      * @return 货车数量
      */
     public int getCartCount() {
-        return model.getBuilding("货车");
+        return model.getBuilding(GameConstants.Buildings.CART);
     }
 }
