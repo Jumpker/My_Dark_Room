@@ -59,7 +59,7 @@ public class CurrentScaleScene implements Scene {
      */
     public void updateForPhase2() {
         // 添加"伐木"按钮
-        CooldownButton chopWoodButton = new CooldownButton("伐木", 15); // 15秒冷却
+        CooldownButton chopWoodButton = new CooldownButton("伐木", GameConstants.Timers.CHOP_WOOD_COOLDOWN); // 15秒冷却
         activeEventPanel.add(chopWoodButton);
         chopWoodButton.addActionListener(e -> {
             chopWoodButton.startCooldown();
@@ -67,7 +67,7 @@ public class CurrentScaleScene implements Scene {
         });
         
         // 创建"查看陷阱"按钮（初始隐藏）
-        checkTrapsButton = new CooldownButton("查看陷阱", 30); // 30秒冷却
+        checkTrapsButton = new CooldownButton("查看陷阱", GameConstants.Timers.CHECK_TRAPS_COOLDOWN); // 15秒冷却
         checkTrapsButton.setVisible(false); // 初始隐藏
         activeEventPanel.add(checkTrapsButton);
         checkTrapsButton.addActionListener(e -> {

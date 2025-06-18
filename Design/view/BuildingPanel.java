@@ -16,7 +16,7 @@ public class BuildingPanel {
     private JPanel panel;
     private GameController controller;
     private JPanel cartPanel; // 保存货车按钮面板的引用
-    
+        
     /**
      * 构造函数
      * @param controller 游戏控制器

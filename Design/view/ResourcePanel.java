@@ -33,7 +33,7 @@ public class ResourcePanel {
         panel.setPreferredSize(new Dimension(250, panel.getPreferredSize().height));
         panel.setVisible(false); // 初始不可见，等待游戏阶段2触发
         
-        // 初始化资源子面板
+        // 初始化仓库子面板
         resourcesPanel = new JPanel();
         resourcesPanel.setBackground(Color.WHITE);
         resourcesPanel.setLayout(new BoxLayout(resourcesPanel, BoxLayout.Y_AXIS));
@@ -73,7 +73,7 @@ public class ResourcePanel {
      * @param resources 资源映射
      */
     private void updateResources(Map<String, Integer> resources) {
-        resourcesPanel.removeAll();
+        resourcesPanel.removeAll();//先清除整个仓库面板
         
         // 获取建筑数量
         Map<String, Integer> buildings = controller.getModel().getBuildings();
@@ -92,7 +92,7 @@ public class ResourcePanel {
         // 更新建筑显示
         updateBuildings(buildings);
         
-        // 这三行是因为资源太少，导致子面板显示不全，故添加一个空的标签来占位
+        // 这三行是因为资源占位太少，导致子面板显示不全，故添加一个空的标签来占位
         JLabel specialResourceLabel = new JLabel("                              ");
         specialResourceLabel.setAlignmentX(Component.LEFT_ALIGNMENT);
         resourcesPanel.add(specialResourceLabel);

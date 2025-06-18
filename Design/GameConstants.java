@@ -35,8 +35,8 @@ public final class GameConstants {
     // 时间常量（毫秒）
     public static final class Timers {
         public static final int ADD_FUEL_COOLDOWN = 5000;  // 添柴冷却时间
-        public static final int CHOP_WOOD_COOLDOWN = 15000; // 伐木冷却时间
-        public static final int CHECK_TRAPS_COOLDOWN = 15000; // 查看陷阱冷却时间
+        public static final int CHOP_WOOD_COOLDOWN = 15; // 伐木冷却时间（秒）
+        public static final int CHECK_TRAPS_COOLDOWN = 15; // 查看陷阱冷却时间（秒）
         public static final int MESSAGE_DISPLAY_TIME = 75000; // 消息显示时间
         
         // 房间状态计时器

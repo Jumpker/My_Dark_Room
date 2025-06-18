@@ -32,14 +32,14 @@ public class GameController {
      * @param eventManager 事件管理器
      */
     public GameController(GameModel model, EventManager eventManager) {
-        this.model = model;
-        this.eventManager = eventManager;
-        this.messageService = new MessageService(eventManager);
-        this.resourceService = new ResourceService(model, eventManager);
-        this.trapManager = new TrapManager(model, messageService, resourceService);
-        this.vehicleManager = new VehicleManager(model, eventManager, messageService);
-        this.roomManager = new RoomManager(model, eventManager, messageService, resourceService);
-        this.roomStatusTimerManager = new RoomStatusTimerManager(model, eventManager, messageService);
+        this.model = model; // 初始化游戏模型
+        this.eventManager = eventManager; // 初始化事件管理器
+        this.messageService = new MessageService(eventManager); // 初始化消息服务，用于发送游戏内消息
+        this.resourceService = new ResourceService(model, eventManager); // 初始化资源服务，用于管理游戏资源
+        this.trapManager = new TrapManager(model, messageService, resourceService); // 初始化陷阱管理器，处理陷阱相关逻辑
+        this.vehicleManager = new VehicleManager(model, eventManager, messageService); // 初始化载具管理器，处理载具相关逻辑
+        this.roomManager = new RoomManager(model, eventManager, messageService, resourceService); // 初始化房间管理器，处理小屋相关逻辑和场景切换
+        this.roomStatusTimerManager = new RoomStatusTimerManager(model, eventManager, messageService); // 初始化房间状态计时器管理器，处理房间状态更新计时
         
         // 初始化游戏
         initializeGame();
