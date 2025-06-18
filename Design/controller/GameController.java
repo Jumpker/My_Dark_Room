@@ -23,6 +23,7 @@ public class GameController {
     private SceneManager sceneManager;
     private TrapManager trapManager;
     private VehicleManager vehicleManager;
+    private RoomManager roomManager;
     private RoomStatusTimerManager roomStatusTimerManager;
     
     /**
@@ -36,7 +37,8 @@ public class GameController {
         this.messageService = new MessageService(eventManager);
         this.resourceService = new ResourceService(model, eventManager);
         this.trapManager = new TrapManager(model, messageService, resourceService);
-        this.vehicleManager = new VehicleManager(model, eventManager);
+        this.vehicleManager = new VehicleManager(model, eventManager, messageService);
+        this.roomManager = new RoomManager(model, eventManager, messageService, resourceService);
         this.roomStatusTimerManager = new RoomStatusTimerManager(model, eventManager, messageService);
         
         // 初始化游戏
@@ -167,59 +169,21 @@ public class GameController {
      * 建造小屋
      */
     public void buildHut() {
-        if (model.getResource("木头") >= 100) {
-            model.decreaseResource("木头", 100);
-            model.increaseBuilding("小屋");
-            eventManager.notifyResourceChangeListeners(model.getResources());
-            addMessage(GameConstants.Messages.HUT_BUILT);
-            
-            // 检查是否是第一个小屋
-            if (model.getBuilding("小屋") == 1) {
-                // 切换到当前规模场景
-                if (sceneManager != null) {
-                    sceneManager.showScene(SceneManager.CURRENT_SCALE_SCENE);
-                }
-                // 通知场景名称变化为"孤独小屋"
-            eventManager.notifySceneNameChangeListeners(GameConstants.Scenes.LONELY_HUT);
-            }
-        } else {
-            addMessage(GameConstants.Messages.WOOD_SHORTAGE);
-        }
+        roomManager.buildHut();
     }
     
     /**
      * 建造陷阱
      */
     public void buildTrap() {
-        if (model.getResource("木头") >= 10) {
-            model.decreaseResource("木头", 10);
-            model.increaseBuilding("陷阱");
-            eventManager.notifyResourceChangeListeners(model.getResources());
-            addMessage(GameConstants.Messages.TRAP_MORE_PREY);
-        } else {
-            addMessage(GameConstants.Messages.WOOD_SHORTAGE);
-        }
+        trapManager.buildTrap();
     }
     
     /**
      * 建造货车
      */
     public void buildCart() {
-        if (vehicleManager.hasCart()) {
-            addMessage(GameConstants.Messages.CART_EXISTS);
-            return;
-        }
-        
-        if (model.getResource(GameConstants.Resources.WOOD) >= GameConstants.BuildingCosts.CART_COST) {
-            if (vehicleManager.buildCart()) {
-                addMessage(GameConstants.Messages.CART_BUILT);
-                
-                // 通知建筑面板更新（移除货车按钮）
-                eventManager.notifyBuildingChangeListeners(model.getBuildings());
-            }
-        } else {
-            addMessage(GameConstants.Messages.WOOD_SHORTAGE);
-        }
+        vehicleManager.buildCart();
     }
     
     /**
@@ -247,6 +211,22 @@ public class GameController {
     }
     
     /**
+     * 获取房间管理器
+     * @return 房间管理器
+     */
+    public RoomManager getRoomManager() {
+        return roomManager;
+    }
+    
+    /**
+     * 获取车辆管理器
+     * @return 车辆管理器
+     */
+    public VehicleManager getVehicleManager() {
+        return vehicleManager;
+    }
+    
+    /**
      * 检查陷阱
      */
     public void checkTraps() {
@@ -267,6 +247,7 @@ public class GameController {
      */
     public void setSceneManager(SceneManager sceneManager) {
         this.sceneManager = sceneManager;
+        this.roomManager.setSceneManager(sceneManager);
     }
     
     /**

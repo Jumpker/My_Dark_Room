@@ -110,6 +110,19 @@ public class TrapManager {
     }
     
     /**
+     * 建造陷阱
+     */
+    public void buildTrap() {
+        if (model.getResource(GameConstants.Resources.WOOD) >= GameConstants.BuildingCosts.TRAP_COST) {
+            resourceService.decreaseResource(GameConstants.Resources.WOOD, GameConstants.BuildingCosts.TRAP_COST);
+            model.increaseBuilding(GameConstants.Buildings.TRAP);
+            messageService.sendMessage(GameConstants.Messages.TRAP_MORE_PREY);
+        } else {
+            messageService.sendMessage(GameConstants.Messages.WOOD_SHORTAGE);
+        }
+    }
+    
+    /**
      * 获取陷阱数量
      * @return 陷阱数量
      */

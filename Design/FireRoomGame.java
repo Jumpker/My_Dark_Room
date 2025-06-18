@@ -120,7 +120,7 @@ public class FireRoomGame extends JFrame {
         add(topButtonPanel, BorderLayout.NORTH);
         
         JButton fireRoomButton = new JButton(GameConstants.UI.FIRE_ROOM_TITLE);
-        currentScaleButton = new JButton("   /   ");
+        currentScaleButton = new JButton("当前场景");
         longJourneyButton = new JButton(GameConstants.Scenes.LONG_JOURNEY); // 使用类成员变量
         
         // 初始阶段只显示生火间按钮，其他按钮隐藏
