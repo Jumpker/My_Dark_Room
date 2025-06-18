@@ -14,15 +14,15 @@ public class HoverInfoButton extends JButton {
         this.infoLabel = new JLabel();
         this.infoLabel.setVisible(false);
 
-        // Add mouse listeners to show/hide infoLabel
+        // 添加鼠标监听器以显示/隐藏信息标签
         addMouseListener(new MouseAdapter() {
             @Override
             public void mouseEntered(MouseEvent e) {
                 infoLabel.setText(resourceInfo);
                 infoLabel.setVisible(true);
-                // Position the infoLabel next to the button
-                // This part might need adjustment based on the actual layout manager
-                // For now, we assume it's added to a parent container that can manage its position
+                // 定位信息标签在按钮旁边
+                // 这部分可能需要根据实际布局管理器进行调整
+                // 目前，我们假设它被添加到一个可以管理其位置的父容器中
             }
 
             @Override

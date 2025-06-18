@@ -50,10 +50,7 @@ public class RoomManager {
             
             // 检查是否是第一个小屋
             if (model.getBuilding(GameConstants.Buildings.HUT) == 1) {
-                // 切换到当前规模场景
-                if (sceneManager != null) {
-                    sceneManager.showScene(SceneManager.CURRENT_SCALE_SCENE);
-                }
+
                 // 通知场景名称变化为"孤独小屋"
                 eventManager.notifySceneNameChangeListeners(GameConstants.Scenes.LONELY_HUT);
             }

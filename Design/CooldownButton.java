@@ -18,12 +18,12 @@ public class CooldownButton extends JButton {
         this.remainingCooldownTime = 0;
         this.originalBackgroundColor = getBackground();
 
-        // Set initial background to white for the button template
+        // 设置按钮模板的初始背景为白色
         setBackground(Color.WHITE);
         setOpaque(true);
         setBorderPainted(false);
 
-        // Cooldown timer (for disabling the button)
+        // 冷却计时器（用于禁用按钮）
         cooldownTimer = new Timer(cooldownTimeSeconds * 1000, new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -31,20 +31,20 @@ public class CooldownButton extends JButton {
                 remainingCooldownTime = 0;
                 cooldownTimer.stop();
                 progressTimer.stop();
-                setBackground(Color.WHITE); // Reset to white after cooldown
+                setBackground(Color.WHITE); // 冷却结束后重置为白色
             }
         });
         cooldownTimer.setRepeats(false);
 
-        // Progress bar timer (for visual effect)
+        // 进度条计时器（用于视觉效果）
         progressTimer = new Timer(100, new ActionListener() { // Update every 100ms
             @Override
             public void actionPerformed(ActionEvent e) {
                 if (remainingCooldownTime > 0) {
-                    remainingCooldownTime -= 100; // Decrease by 100ms
+                    remainingCooldownTime -= 100; // 减少 100ms
                     float progress = (float) (cooldownTimeSeconds * 1000 - remainingCooldownTime) / (cooldownTimeSeconds * 1000);
-                    int grayValue = (int) (255 * (1 - progress)); // From gray (255) to white (0)
-                    setBackground(new Color(255, 255, grayValue)); // R, G, B values for gray to white transition
+                    int grayValue = (int) (255 * (1 - progress)); // 从灰色 (255) 到白色 (0)
+                    setBackground(new Color(255, 255, grayValue)); // 灰色到白色过渡的 R, G, B 值
                 } else {
                     progressTimer.stop();
                     setBackground(Color.WHITE);
@@ -53,14 +53,22 @@ public class CooldownButton extends JButton {
         });
     }
 
+    /**
+     * 开始按钮的冷却计时。
+     * 禁用按钮，设置剩余冷却时间，改变背景颜色，并启动冷却计时器和进度条计时器。
+     */
     public void startCooldown() {
         setEnabled(false);
         remainingCooldownTime = cooldownTimeSeconds * 1000;
-        setBackground(Color.LIGHT_GRAY); // Start with gray
+        setBackground(Color.LIGHT_GRAY); // 从灰色开始
         cooldownTimer.start();
         progressTimer.start();
     }
 
+    /**
+     * 绘制按钮组件。
+     * 在按钮处于冷却状态时，绘制一个覆盖层来模拟进度条效果。
+     */
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
@@ -68,7 +76,7 @@ public class CooldownButton extends JButton {
             Graphics2D g2 = (Graphics2D) g.create();
             float progress = (float) (cooldownTimeSeconds * 1000 - remainingCooldownTime) / (cooldownTimeSeconds * 1000);
             int width = (int) (getWidth() * progress);
-            g2.setColor(Color.WHITE); // The part that becomes white
+            g2.setColor(Color.WHITE); // 变白的部分
             g2.fillRect(0, 0, width, getHeight());
             g2.dispose();
         }

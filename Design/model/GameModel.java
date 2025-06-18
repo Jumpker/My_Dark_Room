@@ -14,27 +14,9 @@ public class GameModel {
     private String[] roomStatusMessages = {"房间冰冷刺骨.", "房间很冷.", "房间暖和.", "房间很宜人.", "房间很暖.", "房间很热."};
     
     /**
-     * 构造函数
+     * 省略构造函数
      */
-    public GameModel() {
-        // 初始化资源和建筑
-        initializeResources();
-        initializeBuildings();
-    }
-    
-    /**
-     * 初始化资源
-     */
-    private void initializeResources() {
-        // 初始没有资源
-    }
-    
-    /**
-     * 初始化建筑
-     */
-    private void initializeBuildings() {
-        // 初始没有建筑
-    }
+
     
     /**
      * 获取资源
