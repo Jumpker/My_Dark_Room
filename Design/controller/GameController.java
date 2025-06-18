@@ -4,6 +4,7 @@ import Design.GameConstants;
 import Design.event.EventManager;
 import Design.model.GameModel;
 import Design.service.MessageService;
+import Design.service.ResourceService;
 import Design.view.SceneManager;
 
 import javax.swing.*;
@@ -18,6 +19,7 @@ public class GameController {
     private GameModel model;
     private EventManager eventManager;
     private MessageService messageService;
+    private ResourceService resourceService;
     private SceneManager sceneManager;
     private TrapManager trapManager;
     private VehicleManager vehicleManager;
@@ -32,9 +34,10 @@ public class GameController {
         this.model = model;
         this.eventManager = eventManager;
         this.messageService = new MessageService(eventManager);
-        this.trapManager = new TrapManager(model, messageService);
+        this.resourceService = new ResourceService(model, eventManager);
+        this.trapManager = new TrapManager(model, messageService, resourceService);
         this.vehicleManager = new VehicleManager(model, eventManager);
-        this.roomStatusTimerManager = new RoomStatusTimerManager(model, messageService);
+        this.roomStatusTimerManager = new RoomStatusTimerManager(model, eventManager, messageService);
         
         // 初始化游戏
         initializeGame();

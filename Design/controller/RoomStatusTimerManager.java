@@ -1,8 +1,9 @@
 package Design.controller;
 
 import Design.GameConstants;
-import Design.model.GameModel;
 import Design.event.EventManager;
+import Design.model.GameModel;
+import Design.service.MessageService;
 
 import javax.swing.Timer;
 import java.awt.event.ActionEvent;
@@ -19,6 +20,7 @@ public class RoomStatusTimerManager {
     
     private GameModel model;
     private EventManager eventManager;
+    private MessageService messageService;
     private Timer roomStatusTimer; // 房间状态更新计时器
     private Timer roomHeatTimer;   // 房间温度降低计时器（仅第二阶段使用）
     
@@ -27,9 +29,10 @@ public class RoomStatusTimerManager {
      * @param model 游戏模型
      * @param eventManager 事件管理器
      */
-    public RoomStatusTimerManager(GameModel model, EventManager eventManager) {
+    public RoomStatusTimerManager(GameModel model, EventManager eventManager, MessageService messageService) {
         this.model = model;
         this.eventManager = eventManager;
+        this.messageService = messageService;
         
         // 注册游戏阶段变化监听器
         this.eventManager.addGamePhaseChangeListener(this::onGamePhaseChanged);
@@ -114,7 +117,7 @@ public class RoomStatusTimerManager {
      * @param message 消息内容
      */
     private void addMessage(String message) {
-        eventManager.notifyMessageListeners(message);
+        messageService.sendMessage(message);
     }
     
     /**

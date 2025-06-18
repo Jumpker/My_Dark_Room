@@ -10,8 +10,8 @@ import Design.event.EventManager;
 public class VehicleManager {
     private GameModel model;
     private EventManager eventManager;
-    private static final int DEFAULT_WOOD_GAIN = 10;
-    private static final int CART_WOOD_GAIN = 50;
+    private static final int DEFAULT_WOOD_GAIN = GameConstants.GameValues.DEFAULT_WOOD_GAIN;
+    private static final int CART_WOOD_GAIN = GameConstants.GameValues.CART_WOOD_GAIN;
     
     /**
      * 构造函数
